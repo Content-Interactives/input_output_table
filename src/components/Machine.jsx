@@ -1,8 +1,20 @@
 import './Machine.css'
 
-const Machine = ({rule, step, lightType}) => {
+const Machine = ({rule, step, lightType, currentOutput, spitAnimation, currentInput, inputSpitAnimation}) => {
     // Determine CSS class based on step
     const stepClass = step === 0 ? 'stepOne' : step === 1 ? 'stepTwo' : 'stepThree';
+    
+    // Determine spit animation class based on step
+    const spitClass = spitAnimation ? 
+        (step === 0 ? 'spit-animation-step-one' : 
+         step === 1 ? 'spit-animation-step-two' : 
+         'spit-animation-step-three') : '';
+
+    // Determine input spit animation class based on step
+    const inputSpitClass = inputSpitAnimation ? 
+        (step === 0 ? 'input-spit-animation-step-one' : 
+         step === 1 ? 'input-spit-animation-step-two' : 
+         'input-spit-animation-step-three') : '';
     
     return(
         <div className='flex flex-col h-[100%] flex-grow items-center z-2'>
@@ -62,7 +74,14 @@ const Machine = ({rule, step, lightType}) => {
                     {/* Middle of Machine */}
                     <div className='w-[80%] h-[100%] flex items-center justify-center z-2'>
                         {/* Left Funnel */}
-                        <div className={`bg-yellow-500 h-[50px] w-[20px] flex items-center justify-center ${stepClass}`} style={{clipPath: 'polygon(0% 0%, 100% 25%, 100% 75%, 0% 100%)'}} />
+                        <div className='relative'>
+                            {/* Input Spit In - placed first so it renders behind */}
+                            <div className={`absolute top-0 pt-3 ${stepClass} ${inputSpitClass}`} style={{ zIndex: 1 }}>
+                                {currentInput}
+                            </div>
+                            {/* Funnel - placed second so it renders in front */}
+                            <div className={`bg-yellow-500 h-[50px] w-[20px] flex items-center justify-center ${stepClass}`} style={{clipPath: 'polygon(0% 0%, 100% 25%, 100% 75%, 0% 100%)', zIndex: 2, position: 'relative'}} />
+                        </div>
                         {/* Gray Body */}
                         <div className='flex-grow bg-gray-500 h-[100%] flex items-center justify-center z-0'>
                                 {/* Rule */}
@@ -71,7 +90,14 @@ const Machine = ({rule, step, lightType}) => {
                                 <div className='absolute bg-gray-600 h-[30%] w-[10px] rounded-lg z-1'/>
                         </div>
                         {/* Right Funnel */}
-                        <div className={`bg-yellow-500 h-[50px] w-[20px] flex items-center justify-center ${stepClass}`} style={{clipPath: 'polygon(0% 25%, 100% 0%, 100% 100%, 0% 75%)'}} />
+                        <div className='relative'>
+                            {/* Output Spit Out - placed first so it renders behind */}
+                            <div className={`absolute top-0 pt-3 ${stepClass} ${spitClass}`} style={{ zIndex: 1 }}>
+                                {currentOutput}
+                            </div>
+                            {/* Funnel - placed second so it renders in front */}
+                            <div className={`bg-yellow-500 h-[50px] w-[20px] flex items-center justify-center ${stepClass}`} style={{clipPath: 'polygon(0% 25%, 100% 0%, 100% 100%, 0% 75%)', zIndex: 2, position: 'relative'}} />
+                        </div>
                     </div>
                 {/* Bottom Slab */}
                 <div className='w-[70%] h-[10px] bg-gray-700 rounded-tl-lg rounded-tr-lg'/>

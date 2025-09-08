@@ -18,6 +18,8 @@ const InputOutputTable = () => {
         const [shakeButton, setShakeButton] = useState(null);
         const [buttonFadeState, setButtonFadeState] = useState('visible'); // 'visible', 'fade-out', 'fade-in'
         const [isProcessingCorrectAnswer, setIsProcessingCorrectAnswer] = useState(false);
+        const [spitAnimation, setSpitAnimation] = useState(false);
+        const [inputSpitAnimation, setInputSpitAnimation] = useState(false);
 
         // Functions
         const generateTable = () => {
@@ -62,12 +64,14 @@ const InputOutputTable = () => {
                 const newOutputs = selectedInputs.map(input => multiplier * input + addSubtract);
                 setOutputs(newOutputs);
                 
-                // Reset revealed outputs, lights, shake button, fade state, and processing flag
+                // Reset revealed outputs, lights, shake button, fade state, processing flag, and spit animations
                 setRevealedOutputs([false, false, false]);
                 setLightType(null);
                 setShakeButton(null);
                 setButtonFadeState('visible');
                 setIsProcessingCorrectAnswer(false);
+                setSpitAnimation(false);
+                setInputSpitAnimation(false);
                 
                 // Generate choices for the first step
                 setTimeout(() => generateChoices(), 0);
@@ -124,12 +128,22 @@ const InputOutputTable = () => {
                         setLightType('correct');
                         setTimeout(() => setLightType(null), 800);
                         
+                        // Trigger input spit animation first
+                        setInputSpitAnimation(true);
+                        setTimeout(() => setInputSpitAnimation(false), 600);
+                        
+                        // Then trigger output spit animation after a delay
+                        setTimeout(() => {
+                                setSpitAnimation(true);
+                                setTimeout(() => setSpitAnimation(false), 600);
+                        }, 500);
+                        
                         // Start fade-out animation after a short delay
                         setTimeout(() => {
                                 setButtonFadeState('fade-out');
-                        }, 500);
+                        }, 700);
                         
-                        // After delay + fade-out completes (0.3s + 0.5s), reveal output and handle next step
+                        // After animations complete, reveal output and handle next step
                         setTimeout(() => {
                                 // Reveal the current output
                                 const newRevealedOutputs = [...revealedOutputs];
@@ -167,7 +181,7 @@ const InputOutputTable = () => {
                                                 }, 300);
                                         }, 50);
                                 }
-                        }, 800); // Wait for delay + fade-out to complete
+                        }, 1150); // Wait for both input and output animations to complete
                 } else {
                         // Flash red light for wrong answer
                         setLightType('wrong');
@@ -209,14 +223,14 @@ const InputOutputTable = () => {
                                         Inputs <br/> (x)
                                 </div>
                                 <div className='flex flex-col flex-grow justify-between my-2'>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>{inputs[0]}</div>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>{inputs[1]}</div>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>{inputs[2]}</div>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>{inputs[0]}</div>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>{inputs[1]}</div>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>{inputs[2]}</div>
                                 </div>
                         </div>
 
                         {/* Rule Column */}
-                        <Machine rule={rule} step={currentStep} lightColor={lightColor} lightType={lightType} />
+                        <Machine rule={rule} step={currentStep} lightColor={lightColor} lightType={lightType} currentOutput={outputs[currentStep]} spitAnimation={spitAnimation} currentInput={inputs[currentStep]} inputSpitAnimation={inputSpitAnimation} />
 
                         {/* Output Column */}
                         <div className='flex flex-col h-[95%] items-center'>
@@ -224,13 +238,13 @@ const InputOutputTable = () => {
                                         Outputs <br/> (y)
                                 </div>
                                 <div className='flex flex-col flex-grow justify-between my-2'>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>
                                                 {revealedOutputs[0] ? outputs[0] : '?'}
                                         </div>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>
                                                 {revealedOutputs[1] ? outputs[1] : '?'}
                                         </div>
-                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md'>
+                                        <div className='w-[30px] h-[30px] flex items-center justify-center border border-gray-300 rounded-md relative' style={{ zIndex: 100 }}>
                                                 {revealedOutputs[2] ? outputs[2] : '?'}
                                         </div>
                                 </div>
