@@ -1,6 +1,6 @@
 import './Machine.css'
 
-const Machine = ({rule, step, lightColor, lightType}) => {
+const Machine = ({rule, step, lightType}) => {
     // Determine CSS class based on step
     const stepClass = step === 0 ? 'stepOne' : step === 1 ? 'stepTwo' : 'stepThree';
     
