@@ -1,12 +1,44 @@
-# React + Vite
+# Input-Output Table Interactive
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the code for the **Input-Output Table Interactive**, designed to help elementary and middle school students practice applying **basic rules** (such as `2x - 1`) to numbers. This interactive serves as an introduction to **functions** by building understanding of how inputs are transformed into outputs.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Interactive
 
-## Expanding the ESLint configuration
+Try it out here:  
+👉 https://content-interactives.github.io/input_output_table
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🌐 Where This Interactive Is Being Used
+
+This interactive is currently featured in the following locations:
+
+- <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/5d12571f-8e12-4441-98ab-c0bc94069a96" /> **CK-12 Intent Response**  
+  - 👉 PRODUCTION: [PENDING]  
+  - 👉 MASTER: [PENDING]  
+- 📘 **CK-12 Flexbooks**  
+  - 👉 [PENDING: Book/lesson link where this interactive appears]  
+
+---
+
+## 📚 Standards & Subjects
+
+This interactive aligns with the following topics and standards:
+
+- **📂 Subject Area**: Elementary / Middle School Math  
+- **🔢 Topic**: Patterns, Input-Output Rules, Introduction to Functions  
+- **📏 Common Core**:  
+  - **CCSS.MATH.CONTENT.4.OA.C.5** – Generate a number or shape pattern that follows a given rule.  
+  - **CCSS.MATH.CONTENT.5.OA.B.3** – Generate two numerical patterns using two given rules. Identify relationships between terms.  
+  - **CCSS.MATH.CONTENT.6.EE.B.6** – Use variables to represent numbers and write expressions when solving real-world or mathematical problems.  
+  - **CCSS.MATH.CONTENT.6.EE.C.9** – Use variables to represent two quantities in a relationship and analyze the relationship using graphs and tables.  
+
+---
+
+## 🛠️ Developer Notes
+
+- **Built with**: React, TypeScript, Vite, Tailwind CSS  
+- **Deployed via**: GitHub Pages  
+- **See**: `src/`, `public/`, `package.json`, `vite.config.js`, and `tailwind.config.js` in the repository
