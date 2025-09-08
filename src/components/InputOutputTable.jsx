@@ -20,6 +20,7 @@ const InputOutputTable = () => {
         const [isProcessingCorrectAnswer, setIsProcessingCorrectAnswer] = useState(false);
         const [spitAnimation, setSpitAnimation] = useState(false);
         const [inputSpitAnimation, setInputSpitAnimation] = useState(false);
+        const [showGreatJob, setShowGreatJob] = useState(false);
 
         // Functions
         const generateTable = () => {
@@ -64,7 +65,7 @@ const InputOutputTable = () => {
                 const newOutputs = selectedInputs.map(input => multiplier * input + addSubtract);
                 setOutputs(newOutputs);
                 
-                // Reset revealed outputs, lights, shake button, fade state, processing flag, and spit animations
+                // Reset revealed outputs, lights, shake button, fade state, processing flag, spit animations, and great job message
                 setRevealedOutputs([false, false, false]);
                 setLightType(null);
                 setShakeButton(null);
@@ -72,6 +73,7 @@ const InputOutputTable = () => {
                 setIsProcessingCorrectAnswer(false);
                 setSpitAnimation(false);
                 setInputSpitAnimation(false);
+                setShowGreatJob(false);
                 
                 // Generate choices for the first step
                 setTimeout(() => generateChoices(), 0);
@@ -152,12 +154,15 @@ const InputOutputTable = () => {
                                 
                                 // Check if this was the final step
                                 if (currentStep === inputs.length - 1) {
-                                        // All inputs solved - trigger confetti and reset
+                                        // All inputs solved - trigger confetti and show great job message
                                         confetti({
                                                 particleCount: 100,
                                                 spread: 70,
                                                 origin: { y: 0.5 }
                                         });
+                                        
+                                        // Show "Great Job!" message
+                                        setShowGreatJob(true);
                                         
                                         // Wait 3 seconds then reset
                                         setTimeout(() => {
@@ -165,6 +170,7 @@ const InputOutputTable = () => {
                                                 setRevealedOutputs([false, false, false]);
                                                 setLightType(null);
                                                 setIsProcessingCorrectAnswer(false);
+                                                setShowGreatJob(false);
                                                 generateTable();
                                         }, 3000);
                                 } else {
@@ -252,35 +258,43 @@ const InputOutputTable = () => {
 
                 </div>
 
-                {/* Buttons */}
+                {/* Buttons or Great Job Message */}
                 <div className='w-[100%] pt-3 pb-4 flex justify-center items-center gap-3'>
-                        <button 
-                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
-                                        shakeButton === 0 ? 'button-shake' : ''
-                                } ${
-                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
-                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
-                                }`}
-                                onClick={() => handleButtonClick(0)}
-                        >{choices[0]}</button>
-                        <button 
-                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
-                                        shakeButton === 1 ? 'button-shake' : ''
-                                } ${
-                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
-                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
-                                }`}
-                                onClick={() => handleButtonClick(1)}
-                        >{choices[1]}</button>
-                        <button 
-                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
-                                        shakeButton === 2 ? 'button-shake' : ''
-                                } ${
-                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
-                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
-                                }`}
-                                onClick={() => handleButtonClick(2)}
-                        >{choices[2]}</button>
+                        {showGreatJob ? (
+                                <div className='h-[80px] text-6xl font-extrabold text-green-600'>
+                                        Great Job!
+                                </div>
+                        ) : (
+                                <>
+                                        <button 
+                                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
+                                                        shakeButton === 0 ? 'button-shake' : ''
+                                                } ${
+                                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
+                                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
+                                                }`}
+                                                onClick={() => handleButtonClick(0)}
+                                        >{choices[0]}</button>
+                                        <button 
+                                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
+                                                        shakeButton === 1 ? 'button-shake' : ''
+                                                } ${
+                                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
+                                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
+                                                }`}
+                                                onClick={() => handleButtonClick(1)}
+                                        >{choices[1]}</button>
+                                        <button 
+                                                className={`count-by-button w-[28%] h-[80px] bg-gray-200 border border-gray-500 border-2 rounded-lg text-3xl font-extrabold text-gray-700 flex justify-center items-center ${
+                                                        shakeButton === 2 ? 'button-shake' : ''
+                                                } ${
+                                                        buttonFadeState === 'fade-out' ? 'fade-out-up-animation' : 
+                                                        buttonFadeState === 'fade-in' ? 'fade-in-up-animation' : ''
+                                                }`}
+                                                onClick={() => handleButtonClick(2)}
+                                        >{choices[2]}</button>
+                                </>
+                        )}
                 </div>
         </Container>
         );
