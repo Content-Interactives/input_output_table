@@ -52,8 +52,8 @@ const InputOutputTable = () => {
                 const multiplier = Math.floor(Math.random() * 5) + 1;
                 
                 // Generate random addition/subtraction (-9 to +9, excluding 0)
-                let addSubtract = Math.floor(Math.random() * 9) + 1;
-                if (addSubtract === 0) addSubtract = 1; // Avoid zero
+                let addSubtract = Math.floor(Math.random() * 18) - 8; // Range: -8 to +9
+                if (addSubtract === 0) addSubtract = Math.random() < 0.5 ? 1 : -1; // Avoid zero
                 
                 // Create rule string
                 const operation = addSubtract > 0 ? '+ ' : '- ';
@@ -261,7 +261,7 @@ const InputOutputTable = () => {
                 {/* Buttons or Great Job Message */}
                 <div className='w-[100%] pt-3 pb-4 flex justify-center items-center gap-3'>
                         {showGreatJob ? (
-                                <div className='h-[80px] text-6xl font-extrabold text-green-600'>
+                                <div className='h-[80px] text-center items-center flex justify-center text-4xl font-extrabold text-green-600'>
                                         Great Job!
                                 </div>
                         ) : (
